@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Snake from '../Snake';
 import Food from '../Food';
+import StatusBar from '../StatusBar';
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -14,6 +15,7 @@ const initialState = {
   food: getRandomCoordinates(),
   speed: 200,
   direction: 'RIGHT',
+  totalScore: 0,
   snakeDots: [
     [0,0],
     [2,0]
@@ -109,6 +111,7 @@ class App extends Component {
       })
       this.enlargeSnake();
       this.increaseSpeed();
+      this.countingPoints();
     }
   }
 
@@ -117,6 +120,12 @@ class App extends Component {
     newSnake.unshift([])
     this.setState({
       snakeDots: newSnake
+    })
+  }
+
+  countingPoints() {
+    this.setState({
+      totalScore: this.state.totalScore + 10
     })
   }
 
@@ -136,6 +145,7 @@ class App extends Component {
   render() {
     return (
       <div className="game-area">
+        <StatusBar score={this.state.totalScore}/>
         <Snake snakeDots={this.state.snakeDots}/>
         <Food dot={this.state.food}/>
       </div>
