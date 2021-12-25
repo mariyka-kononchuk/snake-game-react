@@ -44,26 +44,19 @@ code {
   position: absolute;
   width: 2%;
   height: 2%;
-  background-color: #000;
-  border: 1px solid rgb(100, 96, 96);
+  background-color: rgb(2, 71, 31);
+  border: 1px solid rgb(2, 87, 58);
+  border-radius: 25px;
   z-index: 20;
 }
 
 .snake-food {
   position: absolute;
-  width: 4%;
-  height: 4%;
-  background: rgb(100, 12, 12);
-  border: 1px solid rgb(100, 12, 12);
-  border-radius: 40%;
+  width: 3%;
+  height: 3%;
+  background: rgb(202, 45, 45);
+  border: 1px solid rgb(160, 48, 48);
+  border-radius: 25px;
   z-index: 10;
 }
 
-/* .snake-food {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: green;
-  border: 1px solid rgb(77, 70, 70);
-  z-index: 10;
-} */

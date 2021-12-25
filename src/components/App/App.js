@@ -3,7 +3,6 @@ import Snake from '../Snake';
 import Food from '../Food';
 import StatusBar from '../StatusBar';
 import NameForm from '../NameForm';
-import Grid from '../Grid';
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -15,7 +14,7 @@ const getRandomCoordinates = () => {
 
 const initialState = {
   food: getRandomCoordinates(),
-  speed: 250,
+  speed: 150,
   direction: 'RIGHT',
   totalScore: 0,
   name: '',
@@ -45,8 +44,8 @@ class App extends Component {
     this.checkIfOutOfBorders();
     this.checkIfCollapsed();
     this.checkIfEat();
-    
   }
+
   createNewPlayer = ({name}) => {
     this.setState({
       name: name,
@@ -57,15 +56,12 @@ class App extends Component {
 
   startMovingSnake() {
     console.log("начали движение змейки")
-   
     let intervalId  = setInterval(this.moveSnake, this.state.speed);
     this.setState(
       { intervalId: intervalId }
     )
-    
   }
 
-  
   onKeyDown = (e) => {
     e = e || window.event;
     switch (e.keyCode) {
@@ -99,7 +95,7 @@ class App extends Component {
     }
   }
 
-  moveSnake = () => {
+   moveSnake = () => {
     console.log("змейка двигается")
     
     let dots = [...this.state.snakeDots];
@@ -128,6 +124,7 @@ class App extends Component {
       snakeDots: dots
     })
   }
+ 
 
   checkIfOutOfBorders() {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
@@ -188,7 +185,7 @@ class App extends Component {
   onGameOver() {
     alert(`Game Over. Snake length is ${this.state.snakeDots.length}`);
     this.setState(initialState);
-    // clearInterval(this.state.intervalId);
+    clearInterval(this.state.intervalId);
   }
 
   stopMovingSnake() {
@@ -202,6 +199,7 @@ class App extends Component {
   }
 
   render() {
+    
     return (
       <div>
         {/* <div>
@@ -220,8 +218,19 @@ class App extends Component {
           <div className="game-area">
             <Snake snakeDots={this.state.snakeDots} />
             <Food dot={this.state.food} />
-          </div>:<div></div>}
+          </div> : <div></div>} 
+        {/* <div >
+          {FIELD_ROW.map(y => (
+            <div key={y}>1
+            {FIELD_ROW.map(x => (
+                <div key={x} >0</div>
+            ))}
+              </div>
+          ))}
+        </div> */}
+        
       </div>
+      
     );
   }
 }
