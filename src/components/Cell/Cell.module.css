@@ -1,0 +1,15 @@
+.cell_grid{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 1px grey;
+}
+
+.cell_food{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 1px green;
+}
+
+

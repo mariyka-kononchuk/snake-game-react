@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Snake from '../Snake';
 import Food from '../Food';
 import StatusBar from '../StatusBar';
+import NameForm from '../NameForm';
+import Grid from '../Grid';
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -13,9 +15,12 @@ const getRandomCoordinates = () => {
 
 const initialState = {
   food: getRandomCoordinates(),
-  speed: 200,
+  speed: 250,
   direction: 'RIGHT',
   totalScore: 0,
+  name: '',
+  status: 'start',
+  intervalId: 0,
   snakeDots: [
     [0,0],
     [2,0]
@@ -27,16 +32,40 @@ class App extends Component {
   state = initialState;
 
   componentDidMount() {
-    setInterval(this.moveSnake, this.state.speed);
+    console.log("check")
     document.onkeydown = this.onKeyDown;
   }
 
   componentDidUpdate() {
+    console.log("status", this.state.status)
+    if (this.state.status === 'pause') {
+      this.stopMovingSnake();
+      return;
+    }
     this.checkIfOutOfBorders();
     this.checkIfCollapsed();
     this.checkIfEat();
+    
+  }
+  createNewPlayer = ({name}) => {
+    this.setState({
+      name: name,
+      status: 'game'
+    })
+  this.startMovingSnake();
   }
 
+  startMovingSnake() {
+    console.log("начали движение змейки")
+   
+    let intervalId  = setInterval(this.moveSnake, this.state.speed);
+    this.setState(
+      { intervalId: intervalId }
+    )
+    
+  }
+
+  
   onKeyDown = (e) => {
     e = e || window.event;
     switch (e.keyCode) {
@@ -52,13 +81,29 @@ class App extends Component {
       case 39:
         this.setState({direction: 'RIGHT'});
         break;
+      case 32:
+        if (this.state.status === 'game') {
+          this.setState({ status: 'pause' })
+          this.stopMovingSnake();
+          return;
+        }
+        if (this.state.status === 'pause') {
+          this.setState({ status: 'game' });
+          this.startMovingSnake();
+          return;
+        }
+        
+        break;
       default:
-                return;
+        return;
     }
   }
 
   moveSnake = () => {
+    console.log("змейка двигается")
+    
     let dots = [...this.state.snakeDots];
+    console.log("dots", dots)
     let head = dots[dots.length - 1];
 
     switch (this.state.direction) {
@@ -75,7 +120,7 @@ class App extends Component {
         head = [head[0], head[1] - 2];
         break;
       default:
-                return;
+        return;
     }
     dots.push(head);
     dots.shift();
@@ -105,12 +150,13 @@ class App extends Component {
   checkIfEat() {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
     let food = this.state.food;
+    console.log("foooods", food)
     if (head[0] === food[0] && head[1] === food[1]) {
       this.setState({
         food: getRandomCoordinates()
       })
       this.enlargeSnake();
-      this.increaseSpeed();
+      // this.increaseSpeed();
       this.countingPoints();
     }
   }
@@ -129,114 +175,55 @@ class App extends Component {
     })
   }
 
-  increaseSpeed() {
-    if (this.state.speed > 10) {
-      this.setState({
-        speed: this.state.speed - 10
-      })
-    }
-  }
+  
+
+  // increaseSpeed() {
+  //   if (this.state.speed > 10) {
+  //     this.setState({
+  //       speed: this.state.speed - 10
+  //     })
+  //   }
+  // }
 
   onGameOver() {
     alert(`Game Over. Snake length is ${this.state.snakeDots.length}`);
-    this.setState(initialState)
+    this.setState(initialState);
+    // clearInterval(this.state.intervalId);
+  }
+
+  stopMovingSnake() {
+    console.log("stop moving with pause")
+    clearInterval(this.state.intervalId);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+    document.onkeydown = null;
   }
 
   render() {
     return (
-      <div className="game-area">
-        <StatusBar score={this.state.totalScore}/>
-        <Snake snakeDots={this.state.snakeDots}/>
-        <Food dot={this.state.food}/>
+      <div>
+        {/* <div>
+          <Grid cells={this.state.grid} />
+        </div> */}
+        <div>
+          <StatusBar score={this.state.totalScore} name ={this.state.name} status ={this.state.status} />
+          
+        </div>
+        {this.state.status !=='start'?
+          <div >
+          No start form
+          </div>:
+          <NameForm onCreateNewPlayer={this.createNewPlayer} />}
+        {this.state.status === 'game' || this.state.status === 'pause'?
+          <div className="game-area">
+            <Snake snakeDots={this.state.snakeDots} />
+            <Food dot={this.state.food} />
+          </div>:<div></div>}
       </div>
     );
   }
 }
 
 export default App;
-// import React, { Component } from 'react';
-// import { v4 as uuidv4 } from 'uuid';
-// import data from '../../data/contacts.json'
-// import s from './App.module.css';
-
-// import Container from '../Container';
-// import ContactForm from '../ContactForm';
-// import Filter from '../Filter';
-// import ContactList from '../ContactList';
-
-// class App extends Component {
-
-//   state = {
-//     contacts: data,
-//     filter: ''
-//   }
-
-//   addContact = ({ name, number }) => {
-//     const { contacts } = this.state;
-//     const contact = {
-//       id: uuidv4(),
-//       name,
-//       number
-//     };
-    
-//     if (contacts.find(option => option.name.toLowerCase() === name.toLowerCase())) {
-//       alert(`${name} is already in contacts`);
-//       return;
-//     }
-    
-//     this.setState(({ contacts }) => ({
-//       contacts: [contact, ...contacts]
-//     }))
-//   }
-  
-//   deleteContact = contactId => {
-//     this.setState(prevState => ({
-//       contacts:prevState.contacts.filter(contact => contact.id !==contactId),
-//     }))
-//   }
-
-//   changeFilter = e => {
-//     this.setState({ filter: e.currentTarget.value });
-//   }
-
-//   getVisibleContacts = () => {
-//     const { contacts, filter } = this.state;
-//     const normilizedFilter = filter.toLowerCase();
-//     return contacts.filter(contact =>
-//       contact.name.toLowerCase().includes(normilizedFilter));
-//   }
-  
-//   componentDidMount() {
-//     const contacts = localStorage.getItem('contacts');
-//     const parsedContacts = JSON.parse(contacts);
-//     if (parsedContacts) {
-//       this.setState({ contacts: parsedContacts });
-//     }
-//   }
-
-//   componentDidUpdate(prevPops, prevState) {
-//     const { contacts} = this.state;
-//     if (contacts !== prevState.contacts) {
-//       localStorage.setItem('contacts', JSON.stringify(contacts));
-//     }
-//   }
-
-//   render() {
-//     const { filter } = this.state;
-//     const visibleContacts = this.getVisibleContacts();
-//     return (
-//       <Container>
-//         <div>
-//           <h1 className={s.titlePhonebbok}>Phonebook</h1>
-//           <ContactForm onAddContact={this.addContact} />
-//           <h2 className={s.titleContacts}>Contacts</h2>
-//           <Filter value={filter} onChange={this.changeFilter} />
-//           <ContactList contacts={visibleContacts} onDeleteContact={this.deleteContact} />
-//         </div>
-//       </Container>
-//     );
-//   }
-// }
-
-// export default App;
-

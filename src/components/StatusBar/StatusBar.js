@@ -1,10 +1,8 @@
 import React from 'react';
 
-const StatusBar = ({ score }) => {
-
-
-  return (
-    <div>Score:{score}</div>
+const StatusBar = ({ score, name, status }) => {
+    return (
+        <div>Score:{score}, Name: {name}, Status: { status}</div>
   )
 };
 
