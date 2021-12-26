@@ -51,7 +51,8 @@ class App extends Component {
       name: name,
       status: 'game'
     })
-  this.startMovingSnake();
+    this.startMovingSnake();
+    console.log(localStorage.getItem("name"))
   }
 
   startMovingSnake() {
@@ -185,6 +186,25 @@ class App extends Component {
   onGameOver() {
     alert(`Game Over. Snake length is ${this.state.snakeDots.length}`);
     this.setState(initialState);
+    const player = {
+      name: this.state.name,
+      score: this.state.totalScore
+    }
+    localStorage.setItem (player, JSON.stringify(player))
+
+
+  //    var object = {
+  //  x: 12,
+  //  y: 56
+  // }
+
+  // localStorage.setItem ("object", JSON.stringify("object"));
+  // object = JSON.parse (localStorage.getItem ("object"));
+
+  //   console.log(typeof object); // объект
+  //   console.log(object); // Объект {x: 12, y: 56}
+    
+
     clearInterval(this.state.intervalId);
   }
 
