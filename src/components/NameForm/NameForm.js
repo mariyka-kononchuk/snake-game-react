@@ -8,7 +8,6 @@ class NameForm extends Component {
     }
 
     handleChange = e => {
-       
         this.setState({
             name: e.target.value,
         });
@@ -17,13 +16,10 @@ class NameForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        
         this.setState({
             name: e.target.value,
         });
-       
         this.props.onCreateNewPlayer(this.state);
-       
         this.reset();
     }
 
@@ -50,7 +46,6 @@ class NameForm extends Component {
                         required
                     />
                 </label>
-        
                 <button className={s.button} type="submit">Begin game</button>
             </form>
         )
@@ -58,7 +53,7 @@ class NameForm extends Component {
 }
 
 NameForm.propTypes = {
-    onCreateNewPlayer: PropTypes.func.isRequired,
+    onCreateNewPlayer: PropTypes.func,
 };
 
 export default NameForm;

@@ -3,6 +3,7 @@ import Snake from '../Snake';
 import Food from '../Food';
 import StatusBar from '../StatusBar';
 import NameForm from '../NameForm';
+import GameOver from '../GameOver';
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -37,7 +38,8 @@ class App extends Component {
 
   componentDidUpdate() {
     console.log("status", this.state.status)
-    if (this.state.status === 'pause') {
+    
+    if (this.state.status === 'pause' || this.state.status === 'game_over') {
       this.stopMovingSnake();
       return;
     }
@@ -46,7 +48,7 @@ class App extends Component {
     this.checkIfEat();
   }
 
-  createNewPlayer = ({name}) => {
+  createNewPlayer = ({ name }) => {
     this.setState({
       name: name,
       status: 'game'
@@ -57,7 +59,7 @@ class App extends Component {
 
   startMovingSnake() {
     console.log("начали движение змейки")
-    let intervalId  = setInterval(this.moveSnake, this.state.speed);
+    let intervalId = setInterval(this.moveSnake, this.state.speed);
     this.setState(
       { intervalId: intervalId }
     )
@@ -67,16 +69,16 @@ class App extends Component {
     e = e || window.event;
     switch (e.keyCode) {
       case 38:
-        this.setState({direction: 'UP'});
+        this.setState({ direction: 'UP' });
         break;
       case 40:
-        this.setState({direction: 'DOWN'});
+        this.setState({ direction: 'DOWN' });
         break;
       case 37:
-        this.setState({direction: 'LEFT'});
+        this.setState({ direction: 'LEFT' });
         break;
       case 39:
-        this.setState({direction: 'RIGHT'});
+        this.setState({ direction: 'RIGHT' });
         break;
       case 32:
         if (this.state.status === 'game') {
@@ -96,7 +98,7 @@ class App extends Component {
     }
   }
 
-   moveSnake = () => {
+  moveSnake = () => {
     console.log("змейка двигается")
     
     let dots = [...this.state.snakeDots];
@@ -173,7 +175,6 @@ class App extends Component {
     })
   }
 
-  
 
   // increaseSpeed() {
   //   if (this.state.speed > 10) {
@@ -184,28 +185,39 @@ class App extends Component {
   // }
 
   onGameOver() {
-    alert(`Game Over. Snake length is ${this.state.snakeDots.length}`);
-    this.setState(initialState);
+    this.setState({
+      status: 'game_over'
+    })
+    
     const player = {
       name: this.state.name,
       score: this.state.totalScore
     }
-    localStorage.setItem (player, JSON.stringify(player))
+    localStorage.setItem(player, JSON.stringify(player))
 
 
-  //    var object = {
-  //  x: 12,
-  //  y: 56
-  // }
+    //    var object = {
+    //  x: 12,
+    //  y: 56
+    // }
 
-  // localStorage.setItem ("object", JSON.stringify("object"));
-  // object = JSON.parse (localStorage.getItem ("object"));
+    // localStorage.setItem ("object", JSON.stringify("object"));
+    // object = JSON.parse (localStorage.getItem ("object"));
 
-  //   console.log(typeof object); // объект
-  //   console.log(object); // Объект {x: 12, y: 56}
+    //   console.log(typeof object); // объект
+    //   console.log(object); // Объект {x: 12, y: 56}
     
 
     clearInterval(this.state.intervalId);
+  }
+
+  restartGame({status}) {
+    
+    this.setState({
+  
+  status: status,
+ 
+});
   }
 
   stopMovingSnake() {
@@ -219,39 +231,33 @@ class App extends Component {
   }
 
   render() {
+    const { status, totalScore, name, food, snakeDots } = this.state
     
-    return (
-      <div>
-        {/* <div>
-          <Grid cells={this.state.grid} />
-        </div> */}
+    if (status === 'start') {
+      return (
         <div>
-          <StatusBar score={this.state.totalScore} name ={this.state.name} status ={this.state.status} />
-          
-        </div>
-        {this.state.status !=='start'?
-          <div >
-          No start form
-          </div>:
-          <NameForm onCreateNewPlayer={this.createNewPlayer} />}
-        {this.state.status === 'game' || this.state.status === 'pause'?
+           <NameForm onCreateNewPlayer={this.createNewPlayer} />
+        </div>)
+    }
+    if (status === 'game' || status === 'pause') {
+      return (
+        <div>
+          <div>
+            <StatusBar score={totalScore} name ={name} status ={status} />
+          </div>
           <div className="game-area">
-            <Snake snakeDots={this.state.snakeDots} />
-            <Food dot={this.state.food} />
-          </div> : <div></div>} 
-        {/* <div >
-          {FIELD_ROW.map(y => (
-            <div key={y}>1
-            {FIELD_ROW.map(x => (
-                <div key={x} >0</div>
-            ))}
-              </div>
-          ))}
-        </div> */}
-        
-      </div>
-      
-    );
+            <Snake snakeDots={snakeDots} />
+            <Food dot={food} />
+          </div>
+        </div>)
+    }
+    
+    if (status === 'game_over') {
+      return (
+        <div>
+          <GameOver score={totalScore} onRestart={this.restartGame }/>
+        </div>)
+    }
   }
 }
 
