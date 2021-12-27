@@ -211,13 +211,8 @@ class App extends Component {
     clearInterval(this.state.intervalId);
   }
 
-  restartGame({status}) {
-    
-    this.setState({
-  
-  status: status,
- 
-});
+  onRestartGame() {
+    this.setState(initialState);
   }
 
   stopMovingSnake() {
@@ -255,7 +250,12 @@ class App extends Component {
     if (status === 'game_over') {
       return (
         <div>
-          <GameOver score={totalScore} onRestart={this.restartGame }/>
+          {/* <GameOver score={totalScore} onRestart={this.restartGame }/> */}
+          <div>
+            <h2>GAME OVER</h2>
+            <p>Your score {totalScore}</p>
+            <button type="button" onClick={()=>this.onRestartGame()}>Restart game</button>
+        </div>
         </div>)
     }
   }
