@@ -1,8 +1,11 @@
 import React from 'react';
 
-const Snake = (props) => (
-    <div>
+const Snake = (props) => {
+ console.log('test',props.snakeDots)
+  return (
+<div>
       {props.snakeDots.map((dot, i) => {
+        
         const style = {
           left: `${dot[0]}%`,
           top: `${dot[1]}%`
@@ -12,7 +15,11 @@ const Snake = (props) => (
         )
       })}
     </div>
-)
+  )
+}
+ 
+    
+
 
 export default Snake;
   

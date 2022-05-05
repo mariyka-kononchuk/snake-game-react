@@ -1,13 +1,13 @@
 * {
   /* list-style: none; */
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
-img {
+/* img {
   display: block;
   max-width: 100%;
   height: auto;
-}
+} */
 
 h1,
 h2,
@@ -42,8 +42,9 @@ code {
 
 .snake-dot {
   position: absolute;
-  width: 2%;
-  height: 2%;
+  width: 3%;
+  height: 3%;
+  /* padding-right: 5px; */
   background-color: rgb(2, 71, 31);
   border: 1px solid rgb(2, 87, 58);
   border-radius: 25px;
@@ -59,4 +60,19 @@ code {
   border-radius: 25px;
   z-index: 10;
 }
+
+.img500 {
+  /* width: 500px;
+  height: 500px; */
+  background-image: url('./components/500x500.jpeg');
+}
+
+li {
+  list-style-type: none;
+  /* height: 50px; */
+  /* width: 500px; */
+  
+}
+
+
 

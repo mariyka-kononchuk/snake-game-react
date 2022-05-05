@@ -1,4 +1,4 @@
-.cell_grid{
+/* .cell_grid{
   position: absolute;
   width: 20px;
   height: 20px;
@@ -7,9 +7,34 @@
 
 .cell_food{
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   border: solid 1px green;
+} */
+
+.snakeCell {
+  width: 50px;
+  height:50px;
+  background: #293742;
 }
 
+.blankCell {
+  width: 50px;
+  height: 50px;
+  background: grey;
+}
 
+.fruitCell {
+  width: 50px;
+  height: 50px;
+  background: #db3737;
+  animation: fruitCellAppear linear 300ms;
+}
+
+/* .snakeHead {
+  transition: none !important;
+} */
+
+/* .snakeHead {
+  background: yellow;
+} */
