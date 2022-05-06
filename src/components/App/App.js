@@ -8,12 +8,12 @@ import Grid from '../Grid';
 
 export default function App() {
 
-const width=10;
-const height=10;    
+const FIELD_SIZE=10;
+  
 let initialRows = [];
-for(let i=0; i<height; i++) {
+for(let i=0; i<FIELD_SIZE; i++) {
     initialRows.push([]);
-    for(let k=0; k<width; k++) {
+    for(let k=0; k<FIELD_SIZE; k++) {
         initialRows[i].push('blank');
     }
 }
@@ -21,8 +21,8 @@ for(let i=0; i<height; i++) {
 
 const randomPosition = () => {
     const position = {
-        x: Math.floor(Math.random()*width),
-        y: Math.floor(Math.random()*height)};
+        x: Math.floor(Math.random()*FIELD_SIZE),
+        y: Math.floor(Math.random()*FIELD_SIZE)};
     return position;    
 }
 const [name, setName] = useState(''); 
@@ -133,7 +133,7 @@ const moveSnake = () => {
   }
 
   const checkIfOutOfBorders =()=> {
-    if (snake[0].x >= width || snake[0].y  >= width || snake[0].x < 0 || snake[0].y  < 0) {
+    if (snake[0].x >= FIELD_SIZE|| snake[0].y  >= FIELD_SIZE || snake[0].x < 0 || snake[0].y  < 0) {
       setStatus('game_over');
       return;
     }

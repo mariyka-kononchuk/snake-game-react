@@ -27,7 +27,7 @@ export default function Grid ({rows}){
                 case 'snake':
                    return <Cell type={'snake'} />;
                 case 'food':
-                    return <Cell type={'food'} />;
+                    return <img src={Food} alt='food'/> 
                 default:
                     return null;
             }
