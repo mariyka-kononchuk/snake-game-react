@@ -17,7 +17,7 @@ export default function Grid ({rows}){
         // //     }
         // // };
 
-        console.log("grid", rows)
+        // console.log("grid", rows)
     const displayRows = rows.map(row => 
     <div>
         {row.map(e => {
