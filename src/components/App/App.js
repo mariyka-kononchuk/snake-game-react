@@ -83,17 +83,17 @@ const moveSnake = () => {
     const newSnake = [];
     switch(direction) {
       case 'right':
-        console.log('ddd',{x: snake[0].x, y: (snake[0].y + 1)%width} )
-            newSnake.push({x: snake[0].x, y: (snake[0].y + 1)%width})
+        console.log('ddd',{x: snake[0].x, y: (snake[0].y + 1)} )
+            newSnake.push({x: snake[0].x, y: (snake[0].y + 1)})
             break;
         case 'left':
-            newSnake.push({x: snake[0].x, y: (snake[0].y - 1 + width)%width})
+            newSnake.push({x: snake[0].x, y: (snake[0].y - 1 )})
             break;
         case 'top':
-            newSnake.push({x: (snake[0].x - 1 + height)%height, y: snake[0].y})
+            newSnake.push({x: (snake[0].x - 1 ), y: snake[0].y})
             break;
         case 'bottom':
-        newSnake.push({ x: (snake[0].x + 1) % height, y: snake[0].y })
+        newSnake.push({ x: (snake[0].x + 1) , y: snake[0].y })
         break;
         default:
           return;
@@ -104,14 +104,9 @@ const moveSnake = () => {
   
     if(snake[0].x === food.x && snake[0].y === food.y) {
         setFood(randomPosition);
-    } else
-  if (snake[0].x === snake[snake.length - 1].x && snake[0].y === snake[snake.length - 1].y) {
-
-    setStatus('game_over')
-    }
-    else {
+    } else {
         newSnake.pop();
-    }
+     }
     console.log('newsnake', newSnake)
     setSnake(newSnake);
   displaySnake();
@@ -125,26 +120,34 @@ const moveSnake = () => {
     }
   }
 
-  //   useEffect(() => {
-  //     console.log("check")
-  //     checkIfCollapsed()
-  // //  document.onkeydown = onKeyDown();
-  // //  document.addEventListener("keydown", onKeyDown);
-  //    // displaySnake();
-  //     //console.log('rows', rows)
-  //     // moveSnake()
+  const checkIfOutOfBorders =()=> {
+    if (snake[0].x >= width || snake[0].y  >= width || snake[0].x < 0 || snake[0].y  < 0) {
+      setStatus('game_over');
+      return;
+    }
+  }
+
+  // const checkIfEat = () => {
+  //  if(snake[0].x === food.x && snake[0].y === food.y) {
+  //       setFood(randomPosition);
+  //   }
+  // }
+
+
+    useEffect(() => {
+      console.log("check");
       
-      
-   
-  //   // displaySnake();
-  // }, [moveSnake])
+      checkIfCollapsed();
+      checkIfOutOfBorders();
+  
+  }, [snake])
 
 
   useInterval(
     () => {
       moveSnake();
     },
-     status ==='game_over'  ? null : 300
+     status ==='game_over'  ? null : 500
   );
 
 function useInterval(callback, delay) {
