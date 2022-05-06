@@ -28,7 +28,6 @@ const randomPosition = () => {
 const [name, setName] = useState(''); 
 const [speed, setSpeed] = useState(3000); 
 const [status, setStatus] = useState('game');
-const [intervalId, setIntervalId] = useState(0);
   
 const [rows, setRows] = useState(initialRows);
 const [snake, setSnake] = useState([{x:0,y:0},{x:1,y:0}]);
@@ -103,10 +102,17 @@ const moveSnake = () => {
         })   
   
     if(snake[0].x === food.x && snake[0].y === food.y) {
-        setFood(randomPosition);
-    } else {
-        newSnake.pop();
-     }
+      setFood(randomPosition);
+      
+    //increaseSpeed();
+    //countingPoints();
+    }
+    else {
+       newSnake.pop();
+  }
+
+       
+    
     console.log('newsnake', newSnake)
     setSnake(newSnake);
   displaySnake();
@@ -127,16 +133,9 @@ const moveSnake = () => {
     }
   }
 
-  // const checkIfEat = () => {
-  //  if(snake[0].x === food.x && snake[0].y === food.y) {
-  //       setFood(randomPosition);
-  //   }
-  // }
-
-
+ 
     useEffect(() => {
       console.log("check");
-      
       checkIfCollapsed();
       checkIfOutOfBorders();
   
