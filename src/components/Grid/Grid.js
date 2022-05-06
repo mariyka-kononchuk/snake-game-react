@@ -19,27 +19,30 @@ export default function Grid ({rows}){
 
         // console.log("grid", rows)
     const displayRows = rows.map(row => 
-    <div>
+    <li >
         {row.map(e => {
-            switch(e) {
+            switch (e) {
                 case 'blank':
-                   return <img src={Blank}/>
+                    return <Cell type={'blank'} />;
                 case 'snake':
-                   return <img  src={Snake}/>
+                   return <Cell type={'snake'} />;
                 case 'food':
-                    return <img src={Food}/>      
-                      }
+                    return <Cell type={'food'} />;
+                default:
+                    return null;
+            }
+            
                  })
         }
-    </div>
+    </li>
     );
  
 
    return (
     <div >
-        <div style={{width:'500px', padding:'0px'}} class='img500'>
+        <ul style={{width:'500px', padding:'0px', margin:'0px'}} class='img500'>
         { displayRows }
-        </div>
+        </ul>
     </div>
 )
     

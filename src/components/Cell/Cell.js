@@ -43,6 +43,8 @@ export default function Cell ({type}){
     return (
       <div
         className={classNames(s.cell, cellClassName)}
+        
+  
         // style={{
         //   left: CELL_MARGIN_PX + x * (CELL_SIZE_PX + CELL_MARGIN_PX),
         //   top: CELL_MARGIN_PX + y * (CELL_SIZE_PX + CELL_MARGIN_PX),

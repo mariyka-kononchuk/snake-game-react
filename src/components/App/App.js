@@ -30,15 +30,16 @@ const [speed, setSpeed] = useState(150);
 const [status, setStatus] = useState('start');
   
 const [rows, setRows] = useState(initialRows);
-const [snake, setSnake] = useState([{x:0,y:0},{x:1,y:0}]);
+const [snake, setSnake] = useState([{x:5,y:4},{x:5,y:5}]);
 const [direction, setDirection] = useState('right');
 const [food, setFood] = useState(randomPosition);
   
 
- function createNewPlayer ({ name }) {
-    setName(name);
-    setStatus('pause');
- }
+function createNewPlayer ({ name }) {
+  setName(name);
+  setStatus('pause');
+  displaySnake();
+}
   
   
    useInterval(() => {
