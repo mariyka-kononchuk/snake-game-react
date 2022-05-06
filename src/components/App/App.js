@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 // import Snake from '../Snake';
 // import Food from '../Food';
-// import StatusBar from '../StatusBar';
+import StatusBar from '../StatusBar';
 import NameForm from '../NameForm';
-// import GameOver from '../GameOver';
+import GameOver from '../GameOver';
 import Grid from '../Grid';
 
 export default function App() {
@@ -28,6 +28,8 @@ const randomPosition = () => {
 const [name, setName] = useState(''); 
 const [speed, setSpeed] = useState(150); 
 const [status, setStatus] = useState('start');
+const [score, setScore] = useState(0);
+
   
 const [rows, setRows] = useState(initialRows);
 const [snake, setSnake] = useState([{x:5,y:4},{x:5,y:5}]);
@@ -41,18 +43,12 @@ function createNewPlayer ({ name }) {
   displaySnake();
 }
   
-  
    useInterval(() => {
       moveSnake();
     },
      status ==='game' ? speed : null
   );
  
-      
-   
-
-   
-   
 const changeDirectionWithKeys = (e) => {
     var { keyCode } = e;
       switch (keyCode) {
@@ -118,7 +114,7 @@ const moveSnake = () => {
     if (snake[0].x === food.x && snake[0].y === food.y) {
       setFood(randomPosition);
     //increaseSpeed();
-    //countingPoints();
+    countingPoints();
     } else {
        newSnake.pop();
     }
@@ -139,20 +135,25 @@ const moveSnake = () => {
     }
   }
 
+  const countingPoints =() => {
+    setScore(score+10)
+  }
+
+  const restartGame = () => {
+    setName('');
+    //setRows(initialRows)
+    setSpeed(150);
+    setStatus('start')
+  }
+
   useEffect(() => {
       console.log("check");
       checkIfCollapsed();
       checkIfOutOfBorders();
-  
   }, [snake])
 
 
-  // useInterval(
-  //   () => {
-  //     moveSnake();
-  //   },
-  //    status ==='game_over'  ? null : speed
-  // );
+  
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -187,11 +188,9 @@ function useInterval(callback, delay) {
       return (
         <div>
           <div>
-            {/* <StatusBar score={totalScore} name ={name} status ={status} /> */}
+            <StatusBar score={score} name ={name} status ={status} />
           </div>
           <div className="game-area">
-            {/* <Snake snakeDots={snakeDots} />
-            <Food dot={food} /> */}
             <Grid rows={rows}/>
           </div>
         </div>)
@@ -200,12 +199,12 @@ function useInterval(callback, delay) {
     if (status === 'game_over') {
       return (
         <div>
-          {/* <GameOver score={totalScore} onRestart={this.restartGame }/> */}
-          <div>
+          <GameOver score={score} onRestart={restartGame}/>
+          {/* <div>
             <h2>GAME OVER</h2>
-            {/* <p>Your score {totalScore}</p> */}
+            <p>Your score {score}</p>
             <button type="button" onClick={()=>this.onRestartGame()}>Restart game</button>
-        </div>
+        </div> */}
         </div>)
     }
   
