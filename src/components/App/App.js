@@ -26,8 +26,8 @@ const randomPosition = () => {
     return position;    
 }
 const [name, setName] = useState(''); 
-const [speed, setSpeed] = useState(3000); 
-const [status, setStatus] = useState('game');
+const [speed, setSpeed] = useState(150); 
+const [status, setStatus] = useState('start');
   
 const [rows, setRows] = useState(initialRows);
 const [snake, setSnake] = useState([{x:0,y:0},{x:1,y:0}]);
@@ -35,19 +35,26 @@ const [direction, setDirection] = useState('right');
 const [food, setFood] = useState(randomPosition);
   
 
-  // const createNewPlayer = ({ name }) => {
-  //   setName(name);
-  //   setStatus('game');
-  //   // startMovingSnake();
-  //   console.log(localStorage.getItem("name"))
-    
-  // }
-
+ function createNewPlayer ({ name }) {
+    setName(name);
+    setStatus('pause');
+ }
+  
+  
+   useInterval(() => {
+      moveSnake();
+    },
+     status ==='game' ? speed : null
+  );
+ 
+      
    
 
+   
+   
 const changeDirectionWithKeys = (e) => {
     var { keyCode } = e;
-      switch(keyCode) {
+      switch (keyCode) {
         case 37:
                 setDirection('left');
                 break;
@@ -59,7 +66,17 @@ const changeDirectionWithKeys = (e) => {
               break;
         case 40:
               setDirection('bottom');
-              break;
+          break;
+        case 32:
+        if (status === 'game') {
+          setStatus('pause')
+          return;
+        }
+        if (status === 'pause') {
+          setStatus('game')
+          return;
+        }
+        break;
         default:
             break;            
           }
@@ -70,19 +87,16 @@ document.addEventListener("keydown", changeDirectionWithKeys, false);
 const displaySnake = () => {
     const newRows = initialRows;
     snake.forEach(cell => {
-     newRows[cell.x][cell.y]='snake';
+      newRows[cell.x][cell.y]='snake';
     })
     newRows[food.x][food.y]='food';
     setRows(newRows);
-    // console.log('newStateRows', rows)
 }
-
 
 const moveSnake = () => {
     const newSnake = [];
     switch(direction) {
       case 'right':
-        console.log('ddd',{x: snake[0].x, y: (snake[0].y + 1)} )
             newSnake.push({x: snake[0].x, y: (snake[0].y + 1)})
             break;
         case 'left':
@@ -92,36 +106,27 @@ const moveSnake = () => {
             newSnake.push({x: (snake[0].x - 1 ), y: snake[0].y})
             break;
         case 'bottom':
-        newSnake.push({ x: (snake[0].x + 1) , y: snake[0].y })
-        break;
+            newSnake.push({ x: (snake[0].x + 1) , y: snake[0].y })
+            break;
         default:
-          return;
+            return;
     }
-  snake.forEach(cell => {
-            newSnake.push(cell);
-        })   
-  
-    if(snake[0].x === food.x && snake[0].y === food.y) {
+    snake.forEach(cell => {
+        newSnake.push(cell);
+    })   
+    if (snake[0].x === food.x && snake[0].y === food.y) {
       setFood(randomPosition);
-      
     //increaseSpeed();
     //countingPoints();
-    }
-    else {
+    } else {
        newSnake.pop();
-  }
-
-       
-    
-    console.log('newsnake', newSnake)
+    }
     setSnake(newSnake);
-  displaySnake();
-  console.log('new state rows', rows)
+    displaySnake();
 }
  
   const checkIfCollapsed =()=> {
    if (snake[0].x === snake[snake.length - 1].x && snake[0].y === snake[snake.length - 1].y) {
-
     setStatus('game_over')
     }
   }
@@ -133,8 +138,7 @@ const moveSnake = () => {
     }
   }
 
- 
-    useEffect(() => {
+  useEffect(() => {
       console.log("check");
       checkIfCollapsed();
       checkIfOutOfBorders();
@@ -142,12 +146,12 @@ const moveSnake = () => {
   }, [snake])
 
 
-  useInterval(
-    () => {
-      moveSnake();
-    },
-     status ==='game_over'  ? null : 500
-  );
+  // useInterval(
+  //   () => {
+  //     moveSnake();
+  //   },
+  //    status ==='game_over'  ? null : speed
+  // );
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -171,13 +175,13 @@ function useInterval(callback, delay) {
   
 
     
-    // if (status === 'start') {
-    //   return (
-    //     <div>
-    //        <NameForm onCreateNewPlayer={createNewPlayer} />
-    //     </div>)
-    // }
- // console.log('test new state', snake)
+    if (status === 'start') {
+      return (
+        <div>
+           <NameForm onCreateNewPlayer={createNewPlayer} />
+        </div>)
+    }
+ 
     if (status === 'game' || status === 'pause') {
       return (
         <div>
