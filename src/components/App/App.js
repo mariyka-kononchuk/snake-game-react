@@ -152,9 +152,6 @@ const moveSnake = () => {
       checkIfOutOfBorders();
   }, [snake])
 
-
-  
-
 function useInterval(callback, delay) {
     const savedCallback = useRef();
   
@@ -175,20 +172,18 @@ function useInterval(callback, delay) {
     }, [delay]);
   }
   
-
-    
     if (status === 'start') {
       return (
-        <div>
+        <>
            <NameForm onCreateNewPlayer={createNewPlayer} />
-        </div>)
+        </>)
     }
  
     if (status === 'game' || status === 'pause') {
       return (
         <div>
           <div>
-            <StatusBar score={score} name ={name} status ={status} />
+            <StatusBar score={score} name={name} status={status} />
           </div>
           <div className="game-area">
             <Grid rows={rows}/>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { uuid } from 'uuidv4';
 import Cell from '../Cell';
 import s from './Grid.module.css';
 import { FIELD_SIZE } from '../../constants/game';
@@ -23,7 +24,7 @@ export default function Grid ({rows}){
         {row.map(e => {
             switch (e) {
                 case 'blank':
-                    return <Cell type={'blank'} />;
+                    return <Cell type={'blank'}  />;
                 case 'snake':
                    return <Cell type={'snake'} />;
                 case 'food':
@@ -40,8 +41,8 @@ export default function Grid ({rows}){
 
    return (
     <div >
-        <ul style={{width:'500px', padding:'0px', margin:'0px'}} class='img500'>
-        { displayRows }
+        <ul style={{width:'500px', padding:'0px', margin:'0px'}} className='img500'>
+            { displayRows }
         </ul>
     </div>
 )
