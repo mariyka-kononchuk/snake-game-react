@@ -34,8 +34,13 @@
   display: inline-block;
   width: 50px;
   height: 50px;
-  background: #db3737;
-  animation: fruitCellAppear linear 300ms;
+  /* background: #817272; */
+  /* background-size: 100%; */
+  /* animation: fruitCellAppear linear 300ms; */
+  background-image: url("../images/apple.png");
+  background-size: contain;
+  
+
 }
 
 /* .snakeHead {

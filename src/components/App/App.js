@@ -18,7 +18,6 @@ for(let i=0; i<FIELD_SIZE; i++) {
     }
 }
 
-
 const randomPosition = () => {
     const position = {
         x: Math.floor(Math.random()*FIELD_SIZE),
@@ -40,6 +39,7 @@ const [food, setFood] = useState(randomPosition);
 function createNewPlayer ({ name }) {
   setName(name);
   setStatus('pause');
+  setScore(0);
   displaySnake();
 }
   
@@ -124,13 +124,15 @@ const moveSnake = () => {
  
   const checkIfCollapsed =()=> {
    if (snake[0].x === snake[snake.length - 1].x && snake[0].y === snake[snake.length - 1].y) {
-    setStatus('game_over')
+     setStatus('game_over');
+     setSnake([{ x: 5, y: 4 }, { x: 5, y: 5 }]);
     }
   }
 
   const checkIfOutOfBorders =()=> {
     if (snake[0].x >= FIELD_SIZE|| snake[0].y  >= FIELD_SIZE || snake[0].x < 0 || snake[0].y  < 0) {
-      setStatus('game_over');
+      setStatus('game_over');;
+      setSnake([{ x: 5, y: 4 }, { x: 5, y: 5 }]);
       return;
     }
   }
