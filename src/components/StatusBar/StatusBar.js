@@ -11,12 +11,11 @@ const bestResult = () => {
     const maxScore = Math.max(...topScores)
     return maxScore;
   }
-  console.log('2')
   return 0;
 }
 
 const maxScore = bestResult();
-// console.log('highScore', maxScore)
+
 const StatusBar = ({ score, name}) => {
     return (
       <div className={s.bar}>

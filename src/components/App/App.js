@@ -7,20 +7,8 @@ import NameForm from '../NameForm';
 import GameOver from '../GameOver';
 import Grid from '../Grid';
 
-// const bestResult = () => {
-//   const topPlayers = JSON.parse(localStorage.getItem("players"));
-//   const topScores = [];
-//   for (const player of topPlayers) {
-//     topScores.push(player.score);
-//   }
-//   const maxScore = Math.max(topScores)
-//   return maxScore;
-// }
-
-
-
 export default function App() {
-// const maxScore = bestResult();
+
 const FIELD_SIZE=10;
   
 let initialRows = [];
@@ -159,7 +147,6 @@ const moveSnake = () => {
       name,
       score
     }
-    console.log(player)
     setPlayers([player, ...players])
     localStorage.setItem('players', JSON.stringify(players))
   }
@@ -218,11 +205,6 @@ function useInterval(callback, delay) {
       return (
         <>
           <GameOver score={score} onRestart={restartGame}/>
-          {/* <div>
-            <h2>GAME OVER</h2>
-            <p>Your score {score}</p>
-            <button type="button" onClick={()=>this.onRestartGame()}>Restart game</button>
-        </div> */}
         </>)
     }
   
