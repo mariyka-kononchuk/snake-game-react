@@ -1,23 +1,24 @@
 {
   "files": {
-    "main.css": "/snake-game-react/static/css/main.ee254c20.chunk.css",
-    "main.js": "/snake-game-react/static/js/main.0e747a00.chunk.js",
-    "main.js.map": "/snake-game-react/static/js/main.0e747a00.chunk.js.map",
+    "main.css": "/snake-game-react/static/css/main.7fece606.chunk.css",
+    "main.js": "/snake-game-react/static/js/main.c116205b.chunk.js",
+    "main.js.map": "/snake-game-react/static/js/main.c116205b.chunk.js.map",
     "runtime-main.js": "/snake-game-react/static/js/runtime-main.38a59685.js",
     "runtime-main.js.map": "/snake-game-react/static/js/runtime-main.38a59685.js.map",
     "static/css/2.bc922b9c.chunk.css": "/snake-game-react/static/css/2.bc922b9c.chunk.css",
-    "static/js/2.68b5e636.chunk.js": "/snake-game-react/static/js/2.68b5e636.chunk.js",
-    "static/js/2.68b5e636.chunk.js.map": "/snake-game-react/static/js/2.68b5e636.chunk.js.map",
+    "static/js/2.83b9ba99.chunk.js": "/snake-game-react/static/js/2.83b9ba99.chunk.js",
+    "static/js/2.83b9ba99.chunk.js.map": "/snake-game-react/static/js/2.83b9ba99.chunk.js.map",
     "index.html": "/snake-game-react/index.html",
     "static/css/2.bc922b9c.chunk.css.map": "/snake-game-react/static/css/2.bc922b9c.chunk.css.map",
-    "static/css/main.ee254c20.chunk.css.map": "/snake-game-react/static/css/main.ee254c20.chunk.css.map",
-    "static/js/2.68b5e636.chunk.js.LICENSE.txt": "/snake-game-react/static/js/2.68b5e636.chunk.js.LICENSE.txt"
+    "static/css/main.7fece606.chunk.css.map": "/snake-game-react/static/css/main.7fece606.chunk.css.map",
+    "static/js/2.83b9ba99.chunk.js.LICENSE.txt": "/snake-game-react/static/js/2.83b9ba99.chunk.js.LICENSE.txt",
+    "static/media/Cell.module.css": "/snake-game-react/static/media/apple.77aa038f.png"
   },
   "entrypoints": [
     "static/js/runtime-main.38a59685.js",
     "static/css/2.bc922b9c.chunk.css",
-    "static/js/2.68b5e636.chunk.js",
-    "static/css/main.ee254c20.chunk.css",
-    "static/js/main.0e747a00.chunk.js"
+    "static/js/2.83b9ba99.chunk.js",
+    "static/css/main.7fece606.chunk.css",
+    "static/js/main.c116205b.chunk.js"
   ]
 }
