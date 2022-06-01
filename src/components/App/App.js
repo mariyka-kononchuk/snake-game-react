@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import data from '../../data/players.json'
 // import Snake from '../Snake';
 // import Food from '../Food';
 import StatusBar from '../StatusBar';
@@ -6,8 +7,20 @@ import NameForm from '../NameForm';
 import GameOver from '../GameOver';
 import Grid from '../Grid';
 
-export default function App() {
+// const bestResult = () => {
+//   const topPlayers = JSON.parse(localStorage.getItem("players"));
+//   const topScores = [];
+//   for (const player of topPlayers) {
+//     topScores.push(player.score);
+//   }
+//   const maxScore = Math.max(topScores)
+//   return maxScore;
+// }
 
+
+
+export default function App() {
+// const maxScore = bestResult();
 const FIELD_SIZE=10;
   
 let initialRows = [];
@@ -28,8 +41,8 @@ const [name, setName] = useState('');
 const [speed, setSpeed] = useState(150); 
 const [status, setStatus] = useState('start');
 const [score, setScore] = useState(0);
-
-  
+// const [highScore, setHighScore] = useState(maxScore);
+const [players, setPlayers] = useState(data);
 const [rows, setRows] = useState(initialRows);
 const [snake, setSnake] = useState([{x:5,y:4},{x:5,y:5}]);
 const [direction, setDirection] = useState('right');
@@ -124,15 +137,13 @@ const moveSnake = () => {
  
   const checkIfCollapsed =()=> {
    if (snake[0].x === snake[snake.length - 1].x && snake[0].y === snake[snake.length - 1].y) {
-     setStatus('game_over');
-     setSnake([{ x: 5, y: 4 }, { x: 5, y: 5 }]);
+     onGameOver();
     }
   }
 
   const checkIfOutOfBorders =()=> {
     if (snake[0].x >= FIELD_SIZE|| snake[0].y  >= FIELD_SIZE || snake[0].x < 0 || snake[0].y  < 0) {
-      setStatus('game_over');;
-      setSnake([{ x: 5, y: 4 }, { x: 5, y: 5 }]);
+      onGameOver();
       return;
     }
   }
@@ -141,6 +152,17 @@ const moveSnake = () => {
     setScore(score+10)
   }
 
+  const onGameOver = () => {
+    setStatus('game_over');
+    setSnake([{ x: 5, y: 4 }, { x: 5, y: 5 }]);
+    const player = {
+      name,
+      score
+    }
+    console.log(player)
+    setPlayers([player, ...players])
+    localStorage.setItem('players', JSON.stringify(players))
+  }
   const restartGame = () => {
     setName('');
     //setRows(initialRows)
@@ -178,31 +200,30 @@ function useInterval(callback, delay) {
       return (
         <>
            <NameForm onCreateNewPlayer={createNewPlayer} />
-        </>)
+        </>
+      )
     }
  
     if (status === 'game' || status === 'pause') {
       return (
-        <div>
-          <div>
-            <StatusBar score={score} name={name} status={status} />
-          </div>
+        <>
+          <StatusBar score={score} name={name} status={status} />
           <div className="game-area">
             <Grid rows={rows}/>
           </div>
-        </div>)
+        </>)
     }
     
     if (status === 'game_over') {
       return (
-        <div>
+        <>
           <GameOver score={score} onRestart={restartGame}/>
           {/* <div>
             <h2>GAME OVER</h2>
             <p>Your score {score}</p>
             <button type="button" onClick={()=>this.onRestartGame()}>Restart game</button>
         </div> */}
-        </div>)
+        </>)
     }
   
 }
